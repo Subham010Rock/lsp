@@ -53,7 +53,7 @@ src/
 
 ## 🌐 Live Demo
 
-[View Live Demo](lsp-snowy.vercel.app) _(Add your deployed URL here)_
+[View Live Demo](https://lsp-snowy.vercel.app/)
 
 ## 📄 License
 
