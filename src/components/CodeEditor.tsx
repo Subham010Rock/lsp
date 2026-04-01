@@ -178,14 +178,14 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     monacoInstance.editor.setTheme(theme);
 
     // ── Configure TypeScript Compiler Options ───────────────────────
-    monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions({
-      target: monacoInstance.languages.typescript.ScriptTarget.ESNext,
+    (monacoInstance.languages.typescript as any).typescriptDefaults.setCompilerOptions({
+      target: (monacoInstance.languages.typescript as any).ScriptTarget.ESNext,
       allowNonTsExtensions: true,
-      moduleResolution: monacoInstance.languages.typescript.ModuleResolutionKind.NodeJs,
-      module: monacoInstance.languages.typescript.ModuleKind.CommonJS,
+      moduleResolution: (monacoInstance.languages.typescript as any).ModuleResolutionKind.NodeJs,
+      module: (monacoInstance.languages.typescript as any).ModuleKind.CommonJS,
       noEmit: true,
       esModuleInterop: true,
-      jsx: monacoInstance.languages.typescript.JsxEmit.ReactJSX,
+      jsx: (monacoInstance.languages.typescript as any).JsxEmit.ReactJSX,
       reactNamespace: 'React',
       allowJs: true,
       allowUmdGlobalAccess: true,
@@ -199,12 +199,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       },
     });
 
-    monacoInstance.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+    (monacoInstance.languages.typescript as any).typescriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: false,
       noSyntaxValidation: false,
     });
 
-    monacoInstance.languages.typescript.typescriptDefaults.setEagerModelSync(false);
+    (monacoInstance.languages.typescript as any).typescriptDefaults.setEagerModelSync(false);
 
     // ── Register 15+ Custom Keyboard Shortcuts ──────────────────────
 

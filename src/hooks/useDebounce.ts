@@ -7,14 +7,14 @@ import { useRef, useCallback } from "react";
  *
  * Performance: Uses clearTimeout/setTimeout pattern for O(1) cancellation.
  */
-export function useDebouncedCallback<T extends (...args: any[]) => void>(
-  callback: T,
+export function useDebouncedCallback<A extends any[], R>(
+  callback: (...args: A) => R,
   delay: number = 30,
-): T {
+): (...args: A) => void {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const debouncedFn = useCallback(
-    (...args: Parameters<T>) => {
+    (...args: A) => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
@@ -28,7 +28,7 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
       }, delay);
     },
     [callback, delay],
-  ) as T;
+  ) as any;
 
   return debouncedFn;
 }
@@ -37,13 +37,13 @@ export function useDebouncedCallback<T extends (...args: any[]) => void>(
  * Standalone debounce function (non-hook) for use outside React components.
  * Used by ATA content change handler.
  */
-export function debounce<T extends (...args: any[]) => void>(
-  fn: T,
+export function debounce<A extends any[], R>(
+  fn: (...args: A) => R,
   delay: number = 30,
-): T & { cancel: () => void } {
+): ((...args: A) => void) & { cancel: () => void } {
   let timer: ReturnType<typeof setTimeout> | null = null;
 
-  const debounced = ((...args: Parameters<T>) => {
+  const debounced = ((...args: A) => {
     if (timer) clearTimeout(timer);
     const start = performance.now();
     timer = setTimeout(() => {
@@ -51,7 +51,7 @@ export function debounce<T extends (...args: any[]) => void>(
       console.log(`[ATA Debounce] Fired after ${elapsed.toFixed(1)}ms`);
       fn(...args);
     }, delay);
-  }) as T & { cancel: () => void };
+  }) as any;
 
   debounced.cancel = () => {
     if (timer) clearTimeout(timer);

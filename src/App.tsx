@@ -22,7 +22,7 @@ function App() {
   const lastSuggestionsRef = useRef<monaco.languages.CompletionItem[]>([]);
 
   const onMount: OnMount = useCallback((editor, monacoInstance) => {
-    const tsLang = monacoInstance.languages.typescript;
+    const tsLang = monacoInstance.languages.typescript as any;
     const originalProvider = tsLang.getTypeScriptWorker;
 
     // Register custom completion provider
@@ -68,7 +68,7 @@ function App() {
             monacoInstance.editor.createModel(code, 'json', uri);
           }
         } else {
-          monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(code, filePath);
+          (monacoInstance.languages.typescript as any).typescriptDefaults.addExtraLib(code, filePath);
         }
       },
       (progress) => {
